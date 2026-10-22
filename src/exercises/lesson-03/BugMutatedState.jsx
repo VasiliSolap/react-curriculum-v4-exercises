@@ -10,11 +10,10 @@
 
 import { useState } from 'react';
 export default function BugMutatedState() {
-  let [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   function handleAdd() {
-    count++;
-    setCount(count);
+    setCount(count + 1);
   }
 
   return (
@@ -26,4 +25,8 @@ export default function BugMutatedState() {
 }
 
 // Explanation:
-// (Write your explanation here)
+// The bug: count++ changed the state variable directly, which is a mutation.
+// React does not track direct changes, so state must only be updated
+// through the setter function. Also, let was used so the variable could be reassigned.
+// The fix: I changed let to const, removed count++,
+// and called setCount(count + 1) to create a new value.
