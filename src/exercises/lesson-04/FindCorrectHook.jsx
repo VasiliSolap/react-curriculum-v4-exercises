@@ -1,10 +1,12 @@
 // TOPIC: Choose the correct tool: useRef vs useState
 // TASK: Make sure it updates the text *without* triggering a re-render
+import { useState } from 'react';
+
 export default function FindCorrectHook() {
-  let clickCount = 0; // ← incorrect implementation
+  const [clickCount, setClickCount] = useState(0);
 
   function handleClick() {
-    clickCount++;
+    setClickCount((previous) => previous + 1);
   }
 
   return (
@@ -14,3 +16,11 @@ export default function FindCorrectHook() {
     </div>
   );
 }
+
+// Explanation:
+// A plain `let` variable is reset to 0 on every render and changing it does not
+// tell React to re-render, so the button text never changed.
+// useRef would keep the value between renders, but changing ref.current also
+// does not trigger a re-render, so the button would still show the old number.
+// The click count is shown in the UI, so it belongs in state: useState keeps
+// the value and its setter re-renders the button with the new count.
