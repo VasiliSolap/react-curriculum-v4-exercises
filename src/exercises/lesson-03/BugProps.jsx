@@ -11,12 +11,12 @@
 
   Use the commented "Explanation" section at the bottom of this lesson's components.
 */
-
+import { useState } from 'react';
 export default function BugProps({ name = 'friend' }) {
-  let message = 'Hello, ' + name;
+  const [message, setMessage] = useState('Hello, ' + name);
 
   function handleChange() {
-    message = 'Hi, ' + name + '!';
+    setMessage('Hi, ' + name + '!');
   }
 
   return (
@@ -28,4 +28,7 @@ export default function BugProps({ name = 'friend' }) {
 }
 
 // Explanation:
-// (Write your explanation here)
+// The bug: message was a regular let variable, so changing it
+// with message = ... did not tell React to re-render the component.
+// The fix: I stored message in state with useState('Hello, ' + name),
+// and in handleChange I called setMessage to update it, so the UI changes on click.
